@@ -1,0 +1,40 @@
+<!-- templates/products.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>المنتجات - تسريحاتي</title>
+  <style>
+    body { margin: 0; font-family: 'Cairo', sans-serif; background: #f7fdff; }
+    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 1200px; margin: auto; }
+    .card {
+      background: white; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      padding: 1rem; text-align: center;
+    }
+    .card h3 { color: #007baa; margin: 0.5rem 0; }
+    .card button {
+      margin-top: 0.5rem; background: #007baa; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'header.html' %}
+
+  <section class="products">
+    {% for product in products %}
+    <div class="card">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100%" style="border-radius: 8px;">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.price }} ر.س</p>
+      <form method="post" action="{% url 'add_to_cart' product.id %}">{% csrf_token %}
+        <button>أضف إلى السلة</button>
+      </form>
+    </div>
+    {% endfor %}
+  </section>
+
+  {% include 'footer.html' %}
+
+</body>
+</html>
